@@ -1,0 +1,30 @@
+{
+  "question": "Can a class-balanced LightGBM policy on compact egocentric features beat an MLP policy that consumes raw egocentric map images at choosing navigation actions and reaching goals in unseen grid mazes?",
+  "method": "Random grid mazes generated with numpy; BFS expert actions; 9x9 egocentric windows; maze-level 80/20 split; closed-loop goal-reaching rollouts (cap 100) on test mazes; seeds [42, 43, 44].",
+  "dataset": {
+    "name": "Random grid mazes generated in code (numpy, no download)",
+    "source_url": "https://numpy.org",
+    "n_rows": 84489,
+    "n_train": 67679,
+    "n_test": 16810,
+    "same_as_paper": false,
+    "baseline_is_papers_method": false
+  },
+  "metric_name": "goal-reaching success rate of closed-loop rollouts in unseen test mazes",
+  "higher_is_better": true,
+  "baseline": "scikit-learn MLPClassifier imitation policy on the raw flattened 9x9 egocentric window",
+  "improved": "Class-balanced LightGBM on the same window plus goal direction, distance, free-neighbour and turn-cue features; small grouped-CV grid",
+  "metrics": {
+    "baseline_score": 0.09377777777777778,
+    "improved_score": 0.7935555555555555,
+    "improvement": 0.6997777777777777,
+    "baseline_score_std": 0.0060695556816656275,
+    "improved_score_std": 0.002739739556875075,
+    "baseline_f1": 0.6325062045143587,
+    "improved_f1": 0.926079949478836,
+    "baseline_acc": 0.6326789609359509,
+    "improved_acc": 0.9261947253618877,
+    "n_test_episodes": 1500
+  },
+  "notes": "Synthetic mazes stand in for visual observations; the paper's RL-trained visual policy is not reproduced. Baseline is imitation-trained, not RL-trained. Tuning uses 3-fold GroupKFold by maze on training mazes only. Only 3 seeds and one maze split, so std is across seeds, not across splits. Test starts are unseen mazes but drawn from the same generator. Improved model is class-balanced; baseline MLP is not."
+}
