@@ -19,6 +19,27 @@ python analysis.py
 
 Results: written to results.json (and figures/success_rate.png).
 
+## Results (latest run)
+
+On synthetic random grid mazes (1,500 unseen-maze test episodes), a standard MLP imitation policy on raw egocentric map images reached 9% goal-reaching success, while a class-balanced LightGBM on compact egocentric features reached 79%, averaged over three seeds.
+
+| Metric | Value |
+|---|---|
+| baseline_score | 0.09378 |
+| improved_score | 0.7936 |
+| improvement | 0.6998 |
+| baseline_score_std | 0.00607 |
+| improved_score_std | 0.00274 |
+| baseline_f1 | 0.6325 |
+| improved_f1 | 0.9261 |
+| baseline_acc | 0.6327 |
+| improved_acc | 0.9262 |
+| n_test_episodes | 1500 |
+
+Run on 2026-10-21. Full output: [results.json](results.json) · [run.log](run.log)
+
+Notes: Synthetic mazes stand in for visual observations; the paper's RL-trained visual policy is not reproduced. Baseline is imitation-trained, not RL-trained. Tuning uses 3-fold GroupKFold by maze on training mazes only. Only 3 seeds and one maze split, so std is across seeds, not across splits. Test starts are unseen mazes but drawn from the same generator. Improved model is class-balanced; baseline MLP is not.
+
 ## Reference
 
 This project is motivated by the following paper:
